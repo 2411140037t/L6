@@ -1,0 +1,17 @@
+<h1>商品一覧</h1>
+
+<% if @products.empty? %>
+  <p>商品がありません。</p>
+<% else %>
+  <table border="1">
+    <tr><th>商品名</th><th>価格</th><th></th><th></th></tr>
+    <% @products.each do |p| %>
+      <tr>
+        <td><%= p.name %></td>
+        <td><%= number_with_delimiter(p.price) %>円</td>
+        <td><%= link_to 'カートに入れる', new_cartitem_path(product_id: p.id) %></td>
+        <td><%= link_to '削除', product_path(p), data: { turbo_method: :delete, turbo_confirm: '削除しますか？' } %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

@@ -1,0 +1,21 @@
+<h1>ショッピングカート</h1>
+
+<% if @cart_items.empty? %>
+  <p>カートは空です。</p>
+<% else %>
+  <table border="1">
+    <tr><th>商品名</th><th>価格</th><th>数量</th><th>小計</th><th></th></tr>
+    <% @cart_items.each do |item| %>
+      <tr>
+        <td><%= item.product.name %></td>
+        <td><%= number_with_delimiter(item.product.price) %>円</td>
+        <td><%= item.qty %></td>
+        <td><%= number_with_delimiter(item.subtotal) %>円</td>
+        <td><%= link_to '削除', cartitem_path(item), data: { turbo_method: :delete, turbo_confirm: 'カートから削除しますか？' } %></td>
+      </tr>
+    <% end %>
+  </table>
+  <p><strong>合計金額：<%= number_with_delimiter(@cart.total_price) %>円</strong></p>
+<% end %>
+
+<%= link_to '買い物を続ける', products_path %>
